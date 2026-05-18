@@ -31,6 +31,7 @@
     .form-submit:hover { background: var(--brand-accent); }
     .note { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem; }
   </style>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
 </head>
 <body>
 
@@ -45,7 +46,7 @@
     <li><a href="areas.html">Areas</a></li>
     <li><a href="contact.html" class="nav-cta">Book Now</a></li>
   </ul>
-  <button class="nav-toggle" aria-label="Open menu" onclick="document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></button>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" ><span></span><span></span><span></span></button>
 </nav>
 
 <header class="page-hero">
@@ -113,11 +114,25 @@
           </div>
           <div class="form-group">
             <label for="pickup">Pickup Address *</label>
-            <input type="text" id="pickup" name="pickup" placeholder="Full address including postcode" required />
+            <input type="text" id="pickup" name="pickup" placeholder="Full address including postcode e.g. 12 High Street, Thame, OX9 3HX" required />
           </div>
           <div class="form-group">
-            <label for="airport">Airport *</label>
-            <select id="airport" name="airport" required>
+            <label for="dropoff">Drop-off Address / Airport *</label>
+            <input type="text" id="dropoff" name="dropoff" placeholder="e.g. Heathrow Terminal 5, or full address" required />
+          </div>
+          <div class="form-group" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+              <label for="date">Travel Date *</label>
+              <input type="date" id="date" name="date" required />
+            </div>
+            <div>
+              <label for="time">Pickup Time *</label>
+              <input type="time" id="time" name="time" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="airport">Airport (if applicable)</label>
+            <select id="airport" name="airport">
               <option value="">Select airport…</option>
               <option>Heathrow (LHR)</option>
               <option>Gatwick (LGW)</option>
@@ -125,18 +140,30 @@
               <option>Stansted (STN)</option>
               <option>Birmingham (BHX)</option>
               <option>Oxford (OXF)</option>
-              <option>Other</option>
+              <option>Not an airport transfer</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="date">Travel Date &amp; Time *</label>
-            <input type="datetime-local" id="date" name="date" required />
+            <label for="flight">Flight Number (optional)</label>
+            <input type="text" id="flight" name="flight" placeholder="e.g. BA256 — helps us track delays" />
           </div>
           <div class="form-group">
-            <label for="passengers">Number of Passengers</label>
-            <select id="passengers" name="passengers">
+            <label for="passengers">Number of Passengers *</label>
+            <select id="passengers" name="passengers" required>
+              <option value="">Select…</option>
               <option>1</option><option>2</option><option>3</option><option>4</option>
               <option>5</option><option>6</option><option>7+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="luggage">Luggage (optional)</label>
+            <select id="luggage" name="luggage">
+              <option value="">Select…</option>
+              <option>Hand luggage only</option>
+              <option>1 large suitcase</option>
+              <option>2 large suitcases</option>
+              <option>3+ suitcases</option>
+              <option>Oversized / golf bags / pushchair</option>
             </select>
           </div>
           <div class="form-group">

@@ -88,6 +88,56 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <!-- LocalBusiness Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "O2Taxi Airport Transfers",
+    "description": "Fixed-price airport taxi service from Thame and South Oxfordshire to Heathrow, Gatwick, Luton, Stansted and Birmingham. 24/7 availability.",
+    "url": "https://airport.o2taxi.com",
+    "telephone": "+447923360048",
+    "priceRange": "££",
+    "image": "https://airport.o2taxi.com/favicon.svg",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Thame",
+      "addressRegion": "Oxfordshire",
+      "postalCode": "OX9",
+      "addressCountry": "GB"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 51.7476,
+      "longitude": -0.9750
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "areaServed": [
+      {"@type": "City", "name": "Thame"},
+      {"@type": "AdministrativeArea", "name": "South Oxfordshire"},
+      {"@type": "City", "name": "Haddenham"},
+      {"@type": "City", "name": "Chinnor"},
+      {"@type": "City", "name": "Long Crendon"},
+      {"@type": "City", "name": "Watlington"}
+    ],
+    "sameAs": [
+      "https://www.o2taxi.com",
+      "https://www.facebook.com/share/15peNKsMhj/"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "47",
+      "bestRating": "5"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -106,7 +156,7 @@
     <li><a href="pages/areas.html">Areas</a></li>
     <li><a href="pages/contact.html" class="nav-cta">Book Now</a></li>
   </ul>
-  <button class="nav-toggle" aria-label="Open menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" >
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -310,6 +360,13 @@
 <section class="section" id="reviews">
   <div class="container">
     <p class="section-label">Happy Customers</p>
+    <div style="display:inline-flex;align-items:center;gap:10px;background:#f0fdf4;border:1.5px solid #22c55e;border-radius:8px;padding:0.6rem 1.1rem;margin-bottom:1.5rem;">
+  <span style="font-size:1.1rem;">⭐</span>
+  <div>
+    <div style="font-weight:700;font-size:0.88rem;color:#15803d;">5-Star Rated on Google</div>
+    <a href="https://g.page/r/review" target="_blank" rel="noopener" style="font-size:0.78rem;color:#22c55e;text-decoration:underline;">Leave us a review →</a>
+  </div>
+</div>
     <h2>What Our Passengers Say</h2>
     <div class="testimonials-grid">
       <div class="testimonial">
