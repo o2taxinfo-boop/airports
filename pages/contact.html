@@ -102,8 +102,8 @@
         <h2>Quick Booking Form</h2>
         <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">Fill in your details and we'll get back to you quickly with a fixed price.</p>
 
-        <!-- Form posts to a service like Formspree – update action URL with your form endpoint -->
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleSubmit(event)">
+        <!-- Send via WhatsApp + Email — no third-party service needed -->
+        <form id="bookingForm" onsubmit="sendBooking(event)">
           <div class="form-group">
             <label for="name">Your Name *</label>
             <input type="text" id="name" name="name" placeholder="e.g. John Smith" required />
@@ -168,11 +168,28 @@
           </div>
           <div class="form-group">
             <label for="notes">Additional Notes</label>
-            <textarea id="notes" name="notes" placeholder="Flight number, luggage details, return journey, etc."></textarea>
+            <textarea id="notes" name="notes" placeholder="Return journey needed? Special requirements? Let us know."></textarea>
           </div>
-          <button type="submit" class="form-submit">Send Booking Request →</button>
-          <p class="note">* We'll confirm your booking and fixed price within a few hours. For urgent bookings please call or WhatsApp directly.</p>
+
+          <!-- Send buttons -->
+          <div style="display:flex;flex-direction:column;gap:0.75rem;margin-top:0.5rem;">
+            <button type="submit" name="send_via" value="whatsapp" onclick="this.form.dataset.via='whatsapp'" class="form-submit" style="background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;">
+              💬 Send via WhatsApp
+            </button>
+            <button type="submit" name="send_via" value="email" onclick="this.form.dataset.via='email'" class="form-submit" style="background:var(--brand-dark);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;">
+              📧 Send via Email
+            </button>
+          </div>
+
+          <p class="note" style="margin-top:0.85rem;">Clicking either button opens WhatsApp or your email app with your booking details pre-filled. We'll confirm your fixed price quickly — usually within the hour.</p>
         </form>
+
+        <!-- Success message (hidden by default) -->
+        <div id="successMsg" style="display:none;background:#f0fdf4;border:1.5px solid #22c55e;border-radius:8px;padding:1.5rem;text-align:center;margin-top:1rem;">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">✅</div>
+          <h3 style="color:#15803d;margin-bottom:0.5rem;">Booking Request Sent!</h3>
+          <p style="font-size:0.9rem;color:#374151;">We'll confirm your fixed price shortly. For urgent bookings call <a href="tel:+447923360048" style="color:#22c55e;font-weight:700;">07923 360048</a>.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -191,10 +208,57 @@
 </footer>
 
 <script>
-function handleSubmit(e) {
-  const btn = e.target.querySelector('.form-submit');
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
+function sendBooking(e) {
+  e.preventDefault();
+
+  var via = e.target.dataset.via || 'whatsapp';
+
+  // Collect all fields
+  var name       = document.getElementById('name').value.trim();
+  var phone      = document.getElementById('phone').value.trim();
+  var pickup     = document.getElementById('pickup').value.trim();
+  var dropoff    = document.getElementById('dropoff').value.trim();
+  var date       = document.getElementById('date').value;
+  var time       = document.getElementById('time').value;
+  var airport    = document.getElementById('airport').value;
+  var flight     = document.getElementById('flight').value.trim();
+  var passengers = document.getElementById('passengers').value;
+  var luggage    = document.getElementById('luggage').value;
+  var notes      = document.getElementById('notes').value.trim();
+
+  // Format date nicely
+  var dateStr = date ? new Date(date).toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'}) : 'Not specified';
+
+  // Build message
+  var msg = '✈ *O2TAXI AIRPORT BOOKING REQUEST*\n\n';
+  msg += '👤 *Name:* '        + name       + '\n';
+  msg += '📞 *Phone:* '       + phone      + '\n';
+  msg += '📍 *Pickup:* '      + pickup     + '\n';
+  msg += '🏁 *Drop-off:* '    + dropoff    + '\n';
+  msg += '📅 *Date:* '        + dateStr    + '\n';
+  msg += '🕐 *Time:* '        + time       + '\n';
+  if (airport)    msg += '✈ *Airport:* '     + airport    + '\n';
+  if (flight)     msg += '🛫 *Flight No:* '  + flight     + '\n';
+  msg += '👥 *Passengers:* '  + passengers + '\n';
+  if (luggage)    msg += '🧳 *Luggage:* '    + luggage    + '\n';
+  if (notes)      msg += '📝 *Notes:* '      + notes      + '\n';
+  msg += '\n_Sent from airport.o2taxi.com_';
+
+  if (via === 'whatsapp') {
+    // Open WhatsApp with pre-filled message
+    var waUrl = 'https://wa.me/447923360048?text=' + encodeURIComponent(msg);
+    window.open(waUrl, '_blank');
+  } else {
+    // Build email
+    var subject = 'Airport Taxi Booking – ' + name + ' – ' + dateStr;
+    var body = msg.replace(/\*/g, '').replace(/_/g, '');  // plain text for email
+    var emailUrl = 'mailto:info@o2taxi.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    window.location.href = emailUrl;
+  }
+
+  // Show success message
+  document.getElementById('bookingForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
 }
 </script>
 <script src="../js/main.js"></script>
